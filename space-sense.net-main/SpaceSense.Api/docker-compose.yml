@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  oracle-db:
+    image: gvenzl/oracle-xe:latest
+    container_name: oracle-db
+    environment:
+      ORACLE_PASSWORD: "020207"
+    ports:
+      - "1521:1521"
+    volumes:
+      - oracle_data:/opt/oracle/oradata
+    restart: unless-stopped
+
+  space-sense-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: space-sense-api
+    depends_on:
+      - oracle-db
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+
+volumes:
+  oracle_data:
+
