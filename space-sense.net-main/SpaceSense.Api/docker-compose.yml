@@ -1,9 +1,9 @@
 version: '3.8'
 
 services:
-  oracle-db:
+  rm564662-oracle-db:
     image: gvenzl/oracle-xe:latest
-    container_name: oracle-db
+    container_name: rm564662-oracle-db
     environment:
       ORACLE_PASSWORD: "020207"
     ports:
@@ -12,13 +12,13 @@ services:
       - oracle_data:/opt/oracle/oradata
     restart: unless-stopped
 
-  space-sense-api:
+  rm564662-space-sense-api:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: space-sense-api
+    container_name: rm564662-space-sense-api
     depends_on:
-      - oracle-db
+      - rm564662-oracle-db
     ports:
       - "8080:8080"
     restart: unless-stopped
