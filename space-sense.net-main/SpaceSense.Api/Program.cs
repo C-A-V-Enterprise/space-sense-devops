@@ -92,12 +92,9 @@ var app = builder.Build();
 // Redireciona a raiz para o Swagger automaticamente
 app.MapGet("/", () => Results.Redirect("/swagger"));
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
+
 
 // app.UseHttpsRedirection(); // Comentado para evitar aviso de porta HTTPS no console local
 
