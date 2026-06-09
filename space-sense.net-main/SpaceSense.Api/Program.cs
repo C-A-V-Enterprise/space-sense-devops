@@ -109,8 +109,21 @@ app.MapControllers();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<SatGuardDbContext>();
-    Thread.Sleep(30000); // Aguarda 30 segundos para garantir que o banco de dados esteja pronto
-    db.Database.Migrate();
+
+    var connected = false;
+
+    for (int i = 0; i < 10 && !connected; i++)
+    {
+        try
+        {
+            db.Database.Migrate();
+            connected = true;
+        }
+        catch
+        {
+            Thread.Sleep(10000);
+        }
+    }
 }
 
 app.Run();
